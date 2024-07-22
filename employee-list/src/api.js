@@ -1,34 +1,34 @@
-// src/api.js
 import axios from 'axios';
 
-const API_BASE_URL = 'http://127.0.0.1:8000/api'; // Replace with your actual API URL
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const listEmployees = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/employees`);
+    const response = await axios.get(`${API_BASE_URL}/employees/`);
     return response.data;
   } catch (error) {
-    console.error('Error fetching employees:', error);
-    throw error;
+    throw new Error('Failed to fetch employees');
   }
 };
 
 export const getEmployeeDetails = async (id) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/employees/${id}`);
+    const response = await axios.get(`${API_BASE_URL}/employees/${id}/`);
     return response.data;
   } catch (error) {
-    console.error(`Error fetching details for employee ${id}:`, error);
-    throw error;
+    throw new Error('Failed to fetch employee details');
   }
 };
 
 export const createEmployee = async (employee) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/employees/`, employee);
+    const response = await axios.post(`${API_BASE_URL}/employees/`, employee, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
     return response.data;
   } catch (error) {
-    console.error('Error creating employee:', error);
-    throw error;
+    throw new Error('Failed to create employee');
   }
 };
